@@ -1,0 +1,27 @@
+# R spatial
+# to do what we need we have to install a specific package, which in this case is "sp", and then we recall the dataset and head of the data
+install.packages("sp")
+library(sp)
+data(meuse)
+head(meuse)
+
+# with the following function we set spatial coordinates to create a Spatial object
+coordinates(meuse) = ~x+y
+plot(meuse)
+
+# spplot is for spatial data with attributes, used to plot elements like zinc, lead etc... spread in space
+# in spplot we specify the object, the character and its name
+spplot(meuse, "zinc", main="Concentration of zinc")
+
+# Exercise: plot the concentration of Copper
+spplot(meuse, "copper", main="Concentration of copper")
+
+# Exercise: see copper and zinc
+spplot(meuse, c("copper","zinc"))
+
+# Rather than using colours, let's make us of bubbles
+bubble(meuse, "zinc")
+
+# do the same for lead
+bubble(meuse, "lead")
+bubble(meuse, "lead", col="red")
