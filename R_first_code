@@ -1,0 +1,33 @@
+# we start the lesson of monitoring ecosystem changes and functioning course writing our first codes on Github
+# the first thing we do is an array
+primates <- c(3, 5, 9, 15, 40)  
+primates
+
+# we now prepare a vector, which is unidimensional, and in this case made up of numbers
+crabs <- c(100, 70, 30, 10, 5)
+crabs
+
+# plot is our first R function and in order to work, a function needs arguments: 
+# our arguments are the input data previously created: primates and crabs
+#first plot in R
+plot(primates, crabs)
+
+# it is possible to use additional parameters for manage the graph
+# in this case col=color, pch=controls the type of character to use, cex=controls the the text and sybol's dimension, main=title of the graph's figure
+plot(primates, crabs, col="red")
+plot(primates, crabs, col="red", pch=19)
+plot(primates, crabs, col="red", pch=19, cex=2)
+plot(primates, crabs, col="red", pch=19, cex=6)
+plot(primates, crabs, col="red", pch=19, cex=6, main="My first ecological graph in R!")
+
+# the data we have developed can be stored in a table and a table in R is called data frame
+# create a dataframe
+ecoset <- data.frame(primates, crabs)
+ecoset
+
+# with R it is possible to solve simple mathematical functions useful with "ecological numbers"
+# an example is the mean number of individuals per site
+(3+5+9+15+40)/5
+
+# through the function of summary we have a sum up of the dataframe
+summary(ecoset) # laurel: Ecosets
