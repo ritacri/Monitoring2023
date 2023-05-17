@@ -1,0 +1,63 @@
+# today we use R code for plotting the relationship among ecological variables
+
+# when there is the need of a specific package that is absent, it is possible to install it with install.packages
+install.packages("sp")
+library(sp) 
+
+# data() is used to recall datasets already existing
+data(meuse)
+
+# simply sending, we look inside the set:
+meuse
+
+# Exercise: mean of all of the variables?
+# cadmium mean extraction
+# (11.7+8.6+6.5....)/N
+summary(meuse)
+
+# Exercise: plot zinc (y) against cadmium (x)
+plot(cadmium, zinc)
+
+# We do not have both zinc and cadmium values, so we extract them from meuse with the symbol $
+plot(meuse$cadmium, meuse$zinc)
+
+# another option is using attach() instead of the dollar symbol
+attach(meuse)
+
+# Scatterplot Matrices have as function pairs(): they are used to determine if there is a linear correlation between multiple variables
+pairs(meuse)
+
+##############################
+
+# Lecture #2 on ecological variables
+
+# Exercise
+# We use again the previous package sp and dataset meuse, so we recall them
+library(sp)
+data(meuse)
+
+# Now we recall the functions for the Scatterplot and for seeing the first elements of the data
+pairs(meuse)
+head(meuse)
+
+# cadmium copper lead zinc
+# pairs with soil variables
+# to select elements from column 3 to column 6, we use the following method [i:j,k:r] where i:j are the rows and k:r are the columns
+pairs(meuse[,3:6])
+
+# let's use the names of the columns:
+pairs(~ cadmium + copper + lead + zinc, data=meuse) 
+# considering that tilde is going to be done by Alt + 0126 or Alt + 126
+
+# Exercise: just use cadmium, lead and zince
+pairs(~ cadmium + lead + zinc, data=meuse)
+
+# Exercise: change the color
+pairs(~ cadmium + copper + lead + zinc, data=meuse, col="red") 
+# to change colours of single panels use the par() function 
+
+# Exercise: change the symbol to filled triangles: pch
+pairs(~ cadmium + copper + lead + zinc, data=meuse, col="red", pch=17) 
+
+# Exercise: increase the size of the trinagles
+pairs(~ cadmium + copper + lead + zinc, data=meuse, col="red", pch=17, cex=3) 
