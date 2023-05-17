@@ -1,0 +1,42 @@
+# To go ahead the ggplot2 library / package has to be installed
+install.packages("ggplot2")
+library(ggplot2)
+
+# ecological dataframe: biofuels and oxydative enzimes
+biofuels <- c(120, 200, 350, 570, 750) 
+oxydative <- c(1200, 1300, 21000, 34000, 50000) 
+
+# at this point we can create a dataframe made of these two objects
+d <- data.frame(biofuels, oxydative)
+
+# We will use this dataframe to create our first ggplot
+# ggplot is a very useful package to create powerful graphs
+# in the ggplot we put the dataframe, inputs, and the function to make scatterplots specifying size and color
+ggplot(d, aes(x = biofuels, y = oxydative)) + geom_point(size = 5, col = "red")
+
+# instead of geom_point we use geom_lines to have an observation of the variables on the x axis
+ggplot(d, aes(x = biofuels, y = oxydative)) + geom_line() 
+
+# but we can also use both of them points + lines
+ggplot(d, aes(x = biofuels, y = oxydative)) + geom_point(size = 5, col = "red")  +  geom_line() 
+
+# or use geom_polygons() to see which cases are connected together into a polygon
+ggplot(d, aes(x = biofuels, y = oxydative)) + geom_polygon()
+
+# IMPORT DATA FROM AN EXTERNAL SOURCE
+# To import and/or export data from an external source you need to create a working directory: wd
+# it is setwd for Windows
+# setwd("C:/lab/")
+
+# to read a file in table format and create a data frame from it we do as follows, importing data from "lab"
+covid <- read.table("covid_agg.csv", header=TRUE)
+covid
+head(covid)
+summary(covid)
+
+# now we create another ggplot2
+library(ggplot2)
+ggplot(covid, aes(x = lon, y = lat)) + geom_point()
+
+# changing the size of the data...
+ggplot(covid, aes(x = lon, y = lat, size = cases)) + geom_point()
