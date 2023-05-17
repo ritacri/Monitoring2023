@@ -1,0 +1,141 @@
+# The lesson of today is about "point pattern analysis"
+# not having the spatstat package, we install it:
+# install.packages("spatstat")
+library(spatstat)
+
+# the next step is exporting data about covid from "lab"
+setwd("C:/lab/")
+covid <- read.table("covid_agg.csv", header=TRUE)
+covid
+
+# to see the density of the covid data we make a planar point pattern in spatstat
+# we use attach() to access variables of a DataFrame without invoking any function
+attach(covid)
+
+# we now represent a point pattern dataset with ppp()
+# here we define x, y, and ranges
+covid_planar <- ppp(lon, lat, c(-180,180), c(-90,90))
+
+# now it is possible to see the density of the covid data and it is possible to obtain a plot
+density_map <- density(covid_planar)
+plot(density_map)
+
+# if we want to draw a sequence of points at the specified coordinates we can use the following function:
+points(covid_planar)
+
+# at this point sequence of color schemes can be converted into continous color ramps
+cl <- colorRampPalette(c('yellow','orange','red'))(100)
+plot(density_map, col = cl)
+points(covid_planar)
+
+# Exercise: change the colour of the map
+cl <- colorRampPalette(c('blue','yellow','orange','red','magenta'))(100) # 
+plot(density_map, col = cl)
+points(covid_planar)
+
+# Putting the coutnries ontop of the map
+# Install the rgdal package by:
+# install.packages("rgdal")
+library(rgdal)
+
+# We create a spatial vector object, and continue as before
+coastlines <- readOGR("ne_10m_coastline.shp")
+cl <- colorRampPalette(c('pink','green','orange','red','magenta'))(100) # 
+plot(density_map, col = cl)
+points(covid_planar, pch = 19, cex = 0.5)
+plot(coastlines, add = TRUE)
+
+png("figure1.png")
+cl <- colorRampPalette(c('pink','green','orange','red','magenta'))(100) # 
+plot(density_map, col = cl)
+points(covid_planar, pch = 19, cex = 0.5)
+plot(coastlines, add = TRUE)
+dev.off()
+
+pdf("figure1.pdf")
+cl <- colorRampPalette(c('pink','green','orange','red','magenta'))(100) # 
+plot(density_map, col = cl)
+points(covid_planar, pch = 19, cex = 0.5)
+plot(coastlines, add = TRUE)
+dev.off()
+
+# interpolate case data
+marks(covid_planar) <- cases
+cases_map <- Smooth(covid_planar)
+plot(cases_map, col = cl)
+points(covid_planar)
+plot(coastlines, add = T)
+
+# install sf package:
+install.packages("sf")
+library(sf)
+library(rgdal)
+
+# now we can convert foreign object to an sf object
+Spoints <- st_as_sf(covid, coords = c("lon", "lat"))
+
+cl <- colorRampPalette(c('lightpink2','lightsalmon','tomato1','red3','maroon'))(100)
+plot(cases_map, col = cl)
+plot(Spoints, cex=Spoints$cases/10000, col = 'purple3', lwd = 3, add=T)
+
+# put a smoother to the coastlines by resampling
+coastlines <- readOGR("ne_10m_coastline.shp")
+plot(coastlines, add=T)
+
+#Leonardo Zabotti data
+# we can apply all the functions learned before
+# setwd("C:/lab/")
+leo <- read.table("dati_zabotti.csv", header=T, sep=",")
+head(leo)
+attach(leo)
+library(spatstat)
+summary(leo)
+leo_ppp <- ppp(x, y, c(2300000,2325000), c(5005000,5045000))
+plot(leo_ppp)
+density_map <- density(leo_ppp)
+plot(density_map)
+points(leo_ppp)
+marks(leo_ppp) <- chlh
+chlh_map <- Smooth(leo_ppp)
+cl <- colorRampPalette(c('yellow','orange','red','green'))(100)  
+plot(chlh_map, col=cl)
+points(leo_ppp)
+
+# Exercise: do the same for chls in the sediment
+marks(leo_ppp) <- chls
+chls_map <- Smooth(leo_ppp)
+plot(chls_map, col=cl)
+points(leo_ppp)
+
+# multipanel
+par(mfrow=c(1,3))
+
+# first graph: density map
+plot(density_map, col=cl)
+points(leo_ppp)
+
+# second graph
+plot(chlh_map, col=cl)
+points(leo_ppp)
+
+# third graph
+plot(chls_map, col=cl)
+points(leo_ppp)
+
+# Exercise: build a multipanel with 3 rows and 1 column
+# multipanel
+par(mfrow=c(3,1))
+
+# first graph: density map
+plot(density_map, col=cl)
+points(leo_ppp)
+
+# second graph
+plot(chlh_map, col=cl)
+points(leo_ppp)
+
+# third graph
+plot(chls_map, col=cl)
+points(leo_ppp)
+
+
