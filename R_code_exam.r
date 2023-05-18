@@ -1,5 +1,5 @@
 # In order to start working, as in every r project, I had to first install and load packages
-# having to work with a Species Distribution Modelling, the packages needed are the followins:
+# having to work with a Species Distribution Modelling, the packages needed are the followings:
 library(raster)
 library(rgdal)
 library(sdm)
