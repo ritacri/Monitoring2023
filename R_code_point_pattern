@@ -45,6 +45,7 @@ plot(density_map, col = cl)
 points(covid_planar, pch = 19, cex = 0.5)
 plot(coastlines, add = TRUE)
 
+# as follows, we create a png and a pdf file with the work we've done
 png("figure1.png")
 cl <- colorRampPalette(c('pink','green','orange','red','magenta'))(100) # 
 plot(density_map, col = cl)
