@@ -1,0 +1,55 @@
+# This lesson will we about Copernicus
+# Copernicus set
+# https://land.copernicus.vgt.vito.be/PDF/portal/Application.html
+
+# Register and Login
+# Download data from Criosphere
+# Info: https://land.copernicus.eu/global/content/sce-nhemi-product-s-npp-viirs-data-affected
+
+# Set the working directory
+setwd("C:/lab/")
+
+# install.packages("ncdf4")
+# install.packages("viridis")
+library(ncdf4)
+library(raster)
+library(ggplot2)
+library(RStoolbox)
+library(viridis)
+library(patchwork)
+
+# Import the data
+# this kind of image is composed only by one layer so the raster() function is perfect to import it
+# if we want to see how many layers are inside Copernicus data let's import it with brick()
+snow <- raster("~/Downloads/c_gls_SCE_202012210000_NHEMI_VIIRS_V1.0.1.nc")
+
+# ggplot function
+ggplot() +
+geom_raster(snow, mapping = aes(x=x, y=y, fill=Snow.Cover.Extent)) +
+scale_fill_viridis(option="mako")
+
+# With the function of crop we can select geographic subset of an Extent object
+# Crop over Europe
+# order= xmin, xmax, ymin, ymax
+ext <- c(-2, 50, 20, 70)
+snow.europe <- crop(snow, ext)
+
+# ggplot function for just Europe
+ggplot() +
+geom_raster(snow.europe, mapping = aes(x=x, y=y, fill=Snow.Cover.Extent)) +
+scale_fill_viridis(option="mako")
+
+# now we patchwork them together
+# first of all we need to assign a name to each plot
+p1 <- ggplot() +
+geom_raster(snow, mapping = aes(x=x, y=y, fill=Snow.Cover.Extent)) +
+scale_fill_viridis(option="mako")
+
+p2 <- ggplot() +
+geom_raster(snow.europe, mapping = aes(x=x, y=y, fill=Snow.Cover.Extent)) +
+scale_fill_viridis(option="mako")
+
+# with the + we have one image beside the other
+p1 + p2
+
+
