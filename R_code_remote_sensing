@@ -1,0 +1,63 @@
+# R code for remote sensing data analysis in ecosystem monitoring
+# to fully use the potential of satellite images we need an extra package that may be not already installed in your 
+# if we already have raster installed we can skip this line 
+# this package used to image data is raster
+# in this way will be easily to put toghether Statistical analysis and RS
+install.packages("raster")
+
+# to elaborate and visualize rasters you have to install and additional package
+install.packages("raster")
+
+# remember: once you have installed a package you don't need to install them another time 
+# but you must load it thorugh the library()
+# you must set the library with all the packages you are going to need at the beginning of the proje
+library(raster)
+library(RStoolbox)
+
+# then we set the WD and create our objects
+setwd("C:/lab/") 
+p224r63_2011 <- brick("p224r63_2011_masked.grd")
+p224r63_2011
+
+# a grd file is a set of different raster images. there are different layers, you can extract them
+# to visualize each image separately you can use plot function
+plot(p224r63_2011)
+
+# colours are very important in science, there is a scientific way to set the colours of graph
+# with the following function you can create your own color palette
+cl <- colorRampPalette(c('black','grey','light grey'))(100) 
+plot(p224r63_2011, col=cl)
+
+# the funciton par() will be used to set graphical parameters
+# the first number is the number of rows in the multiframe, while the second one is the number of columns
+par(mfrow=c(2,2))
+# by doing so, we create a multiframe with two rows and two columns
+
+# change the coulour palette with the blue band using "dark blue", "blue", and "light blue"
+clb <- colorRampPalette(c('dark blue','blue','light blue'))(100) # 
+plot(p224r63_2011$B1_sre, col=clb)
+
+# we do the same with the blue and red bands 
+clg <- colorRampPalette(c('dark green','green','light green'))(100) # 
+plot(p224r63_2011$B2_sre, col=clg)
+clr <- colorRampPalette(c('dark red','red','pink'))(100) # 
+plot(p224r63_2011$B3_sre, col=clr)
+
+# Exercise: plot the final band, namely the NIR, band number 4
+# red, orange, yellow
+clnir <- colorRampPalette(c('red','orange','yellow'))(100) # 
+plot(p224r63_2011$B4_sre, col=clnir)
+
+# dev.off()
+plotRGB(p224r63_2011, r=3, g=2, b=1, stretch="Lin")
+plotRGB(p224r63_2011, r=4, g=3, b=2, stretch="Lin")
+plotRGB(p224r63_2011, r=3, g=4, b=2, stretch="Lin")
+plotRGB(p224r63_2011, r=3, g=2, b=4, stretch="Lin")
+
+par(mfrow=c(2,2))
+plotRGB(p224r63_2011, r=3, g=2, b=1, stretch="Lin")
+plotRGB(p224r63_2011, r=4, g=3, b=2, stretch="Lin")
+plotRGB(p224r63_2011, r=3, g=4, b=2, stretch="Lin")
+plotRGB(p224r63_2011, r=3, g=2, b=4, stretch="Lin")
+
+
