@@ -8,7 +8,7 @@ library(ggplot2)
 # install.packages("patchwork") 
 library(patchwork) 
 
-# create a WD
+# we set a WD
 # setwd("C:/lab/") 
 
 # brick
