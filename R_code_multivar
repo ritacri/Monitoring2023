@@ -1,0 +1,32 @@
+# New project: R code for multivar
+# ecological analysis are about multi dimensions
+# install and load library, and then set wd
+install.packages("vegan")
+library(vegan)
+setwd("C:/lab/")
+
+# at this point we can load the data 
+load("biomes_multivar.RData")
+
+# if the function ls is withou argument inside, it returns the names of the function's local variables
+ls()
+
+# plot per species matrix
+head(biomes)
+multivar <- decorana(biomes)
+multivar
+plot(multivar)
+
+# biomes names in the graph:
+# with the following functions, when you have opened a plot you can modify it adding some useful elements
+attach(biomes_types)
+ordiellipse(multivar, type, col=c("black","red","green","blue"), kind = "ehull", lwd=3)
+ordispider(multivar, type, col=c("black","red","green","blue"), label = T)
+
+# and in this way you create a pdf file with the work you've done
+pdf("multivar.pdf")
+plot(multivar)
+ordiellipse(multivar, type, col=c("black","red","green","blue"), kind = "ehull", lwd=3)
+ordispider(multivar, type, col=c("black","red","green","blue"), label = T)
+dev.off()
+
