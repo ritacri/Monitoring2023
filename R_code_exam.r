@@ -69,7 +69,7 @@ par(mfrow=c(3,2))
 plot(stack_1$Probability, col = cl)
 points(species, pch=19)
 plot(preds.crop, col = cl)
-dev.off()
+dev.off() #this function closes the plot
 
 
 
