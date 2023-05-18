@@ -11,8 +11,8 @@ library(sf)
 # it is where R will look for files I want to load and where it will put any files I save
 setwd("C:/monitoring_exam")
 
-# I recall the file I want from my wd, which is a csv 
-wolf_data<-read.csv(file="mexican_wolf.csv")
+# I recall the file I want from my wd, which is an Excel file
+wolf_data<-read.xlsx(file="mexican_wolf.xlsx")
 
 # Now, of the whole data, I need to select only Latitudes and Longitudes (named Lat and Long)
 nLat <-wolf_data$Lat
